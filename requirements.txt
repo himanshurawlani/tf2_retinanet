@@ -1,0 +1,6 @@
+cython
+opencv-python
+pillow
+progressbar2
+dill
+tensorflow

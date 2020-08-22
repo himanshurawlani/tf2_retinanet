@@ -1,0 +1,13 @@
+backbone:
+  name: resnet
+  details:
+    type: resnet50
+
+evaluate:
+  weights: /insert/weights/path/to/model.h5
+
+generator:
+  name: coco
+  details:
+    data_dir: /srv/datasets/COCO/
+    test_set_name: val2017
