@@ -50,24 +50,6 @@ def get_callbacks(
 	"""
     callbacks = []
 
-    # Save snapshots of the model.
-    try:
-        os.makedirs(os.path.join(config["snapshots_path"], config["project_name"]))
-    except FileExistsError as e:
-        print(e)
-        print("Folder already created, moving on.")
-    checkpoint = tf.keras.callbacks.ModelCheckpoint(
-        os.path.join(
-            config["snapshots_path"], config["project_name"], "train_model.h5"
-        ),
-        verbose=1,
-        save_best_only=True,
-        monitor="loss",
-        mode="min"
-    )
-    checkpoint = RedirectModel(checkpoint, model)
-    callbacks.append(checkpoint)
-
     tensorboard_callback=None
     # Create TensorBoard Callback.
     try:
@@ -86,6 +68,24 @@ def get_callbacks(
         evaluation_callback = evaluation_callback(validation_generator, tensorboard=tensorboard_callback)
         evaluation_callback = RedirectModel(evaluation_callback, prediction_model)
         callbacks.append(evaluation_callback)
+
+    # Save snapshots of the model.
+    try:
+        os.makedirs(os.path.join(config["snapshots_path"], config["project_name"]))
+    except FileExistsError as e:
+        print(e)
+        print("Folder already created, moving on.")
+    checkpoint = tf.keras.callbacks.ModelCheckpoint(
+        os.path.join(
+            config["snapshots_path"], config["project_name"], "train_model.h5"
+        ),
+        verbose=1,
+        save_best_only=True,
+        monitor="mAP",
+        mode="max"
+    )
+    checkpoint = RedirectModel(checkpoint, model)
+    callbacks.append(checkpoint)
 
     # Create Reduce Learning Rate on Plateau Callback.
     try:

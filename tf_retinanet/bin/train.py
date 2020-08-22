@@ -94,7 +94,7 @@ def parse_args(args):
     parser.add_argument("--earlystopping-patience",help="How many steps to wait before stopping if criterion is met",default=3000,type=int)
     parser.add_argument("--reduceLR",help="Reduce optimizer learning rate if loss doesn't keep decreasing",action="store_true",default=False)
     parser.add_argument("--reduceLR-patience",help="How many steps should the learning rate stay constant on a plateau",default=300,type=int)
-    parser.add_argument("--lr-scheduler",help="Enable learning rate scheduler callback.",action="store_true",default=False)
+    parser.add_argument("--lr-scheduler",help="Enable learning rate scheduler callback.",action="store_true",default=True)
     parser.add_argument("--decay-steps",help="Number of steps the learning rate keeps decaying.",type=int,default=1000000)
     parser.add_argument("--decay-rate",help="The rate which the lr decays.",type=float,default=0.95)
 
