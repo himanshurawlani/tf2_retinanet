@@ -90,7 +90,7 @@ def get_callbacks(
     # Create Reduce Learning Rate on Plateau Callback.
     try:
         if config['reduceLR']:
-            reducer_callback = tf.keras.callbacks.ReduceLROnPlateau(monitor='loss',
+            reducer_callback = tf.keras.callbacks.ReduceLROnPlateau(monitor='mAP',
                 factor=np.sqrt(0.1),
                 min_lr=0.5e-6,
                 patience=config["reduceLR_patience"],
@@ -104,8 +104,8 @@ def get_callbacks(
     try:
         if config['earlystopping']:
             earlystopping_callback = tf.keras.callbacks.EarlyStopping(
-                monitor="loss", patience=config["earlystopping_patience"],  min_delta=1e-4,
-                mode='min', verbose=1, restore_best_weights=True
+                monitor="mAP", patience=config["earlystopping_patience"],  min_delta=1e-4,
+                mode='max', verbose=1, restore_best_weights=True
             )
             callbacks.append(earlystopping_callback)
     except KeyError as e:

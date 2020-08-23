@@ -19,9 +19,9 @@ There are some structural changes in this repository, which focuses on ease of u
 
 The `tf-retinanet` project has been designed to be modular. The following components are part of the project:
 * **Backbones**:
-   * Imagenet 1k classes pre-trained ResNet50V1
-   * Imagenet 1k classes pre-trained ResNet50V2
-   * Big Transfer Imagenet 21k classes pre-trained ResNet50V2
+   * Imagenet 1k classes pre-trained [ResNet50V1](https://github.com/himanshurawlani/tf2-retinanet/tree/master/tf_retinanet/backbones/resnet)
+   * Imagenet 1k classes pre-trained [ResNet50V2](https://github.com/himanshurawlani/tf2-retinanet/tree/master/tf_retinanet/backbones/resnetv2)
+   * Big Transfer Imagenet 21k classes pre-trained [ResNet50V2](https://github.com/himanshurawlani/tf2-retinanet/tree/master/tf_retinanet/backbones/bit)
 * **Generators**:
    * COCO
    * CSV
@@ -74,6 +74,8 @@ However, if you make local modifications to the `tf-retinanet` repository, you s
 That will ensure that your local changes will be used by the train script.
 
 Example command with resnet50v2 backbone and CSV generator: `$ python bin/train.py --backbone resnetv2 --generator csv  --batch-size 8 --epochs 50 --dataset-type csv --train-annotations data/train.csv --train-classes data/class_ids.csv --val-annotations data/val.csv`
+
+Other available backbone options are: `resnet` and `bit`
 
 ## CSV datasets
 The `CSVGenerator` provides an easy way to define your own datasets.

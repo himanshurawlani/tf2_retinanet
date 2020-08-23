@@ -91,9 +91,9 @@ def parse_args(args):
     parser.add_argument("--tensorboard",help="Enable TensorBoard callback",action="store_true",default=False)
     parser.add_argument("--tensorboard-path",help="Path to store TensorBoard Logs",default="logs/tensorboard_logs",type=str)
     parser.add_argument("--earlystopping",help="Enable EarlyStopping while training",action="store_true",default=True)
-    parser.add_argument("--earlystopping-patience",help="How many steps to wait before stopping if criterion is met",default=3000,type=int)
+    parser.add_argument("--earlystopping-patience",help="How many epochs to wait before stopping if criterion is met",default=10,type=int)
     parser.add_argument("--reduceLR",help="Reduce optimizer learning rate if loss doesn't keep decreasing",action="store_true",default=False)
-    parser.add_argument("--reduceLR-patience",help="How many steps should the learning rate stay constant on a plateau",default=300,type=int)
+    parser.add_argument("--reduceLR-patience",help="How many epochs should the learning rate stay constant on a plateau",default=4,type=int)
     parser.add_argument("--lr-scheduler",help="Enable learning rate scheduler callback.",action="store_true",default=True)
     parser.add_argument("--decay-steps",help="Number of steps the learning rate keeps decaying.",type=int,default=1000000)
     parser.add_argument("--decay-rate",help="The rate which the lr decays.",type=float,default=0.95)
@@ -220,6 +220,10 @@ def main(args=None):
     dump_yaml(config)
     print(config)
     model_path = config['callbacks']["snapshots_path"] + '/' + config['callbacks']["project_name"]
+
+    # If args.steps is not specified use the number of batches as steps
+    if not args.steps:
+        train_config["steps_per_epoch"] = len(train_generator)
 
     # Start training.
     training_model.fit(
